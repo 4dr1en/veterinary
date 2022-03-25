@@ -1,0 +1,20 @@
+{
+    "name": "adrien/cours-object",
+    "authors": [
+        {
+            "name": "adrien",
+            "email": "a.charrier@web-adn.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "Utils\\": "utils/"
+        }
+    },
+    "require": {
+        "php-ds/php-ds": "^1.4",
+        "php-di/php-di": "^6.3",
+        "twig/twig": "^3.0"
+    }
+}
