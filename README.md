@@ -6,7 +6,7 @@ Le theme du projet séléctionné est le thème numéro deux, "Vétérinaire".
 
 ## Installation et prérequis
 
-- Le serveur doit être configuré pour renvoyer toutes les requête vers le fichier "index.php" situé dans le dossier 'public'.
+- Le serveur doit être configuré pour renvoyer toutes les requêtes vers le fichier 'index.php' situé dans le dossier 'public'.
 
 - Ce projet utilise plusieurs fonctionalitées de php non disponible dans les versions inférieurs à php8 (properties promotion, union types et named arguments).
 
