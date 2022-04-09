@@ -1,0 +1,16 @@
+{% extends "body.twig" %}
+
+{% block main %}
+
+
+<div class="container mt-5">
+	<h1 class="show-1 mb-4">
+		{{ veterinaryPractice.name | capitalize}}
+	</h1>
+
+	{% if veterinaryPractice.address is not null %}
+		<p class="mb-3"><b>Address :</b> {{ veterinaryPractice.address }}</p>
+	{% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "body.twig" %}
+
+{% block main %}
+
+	<main class="container">
+		<div class="table-responsive mt-5 mb-5">
+			<table class="table table-striped table-sm">
+				<thead>
+					<tr>
+						<th scope="col">Name</th>
+						<th scope="col">Animal</th>
+						<th scope="col">Veterinarian</th>
+						<th scope="col">Room</th>
+						<th scope="col">Link</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					{% for veterinaryCare in veterinaryCares %}
+						<tr>
+							<td>{{ veterinaryCare.name }}</td>
+							<td>
+								{% if veterinaryCare.animal is not null %}
+									<a href="/animal/{{ veterinaryCare.animal.id }}">
+										{{ veterinaryCare.animal.name }}
+									</a>
+								{% endif %}
+							</td>
+							<td>
+								{% if veterinaryCare.veterinarian is not null %}
+									<a href="/veterinarian/{{ veterinaryCare.veterinarian.id }}">
+										{{ veterinaryCare.veterinarian.name }}
+									</a>
+								{% endif %}
+							</td>
+							<td>
+								{% if veterinaryCare.room is not null %}
+									<a href="/room/{{ veterinaryCare.room.id }}">
+										{{ veterinaryCare.room.name }}
+									</a>
+								{% endif %}
+							</td>
+							<td>
+								<a href="/veterinary-care/{{ veterinaryCare.id }}">
+									Details
+								</a>
+							</td>
+						</tr>
+					{% endfor %}
+
+				</tbody>
+			</table>
+		</div>
+	</main>
+
+{% endblock %}

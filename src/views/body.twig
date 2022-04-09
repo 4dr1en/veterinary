@@ -3,18 +3,13 @@
 {% block body %}
 
 	{% block header %}
-	<header class="site-header">
-		site-header
-	</header>
+		{{ include('header.twig') }}
 	{% endblock %}
 
 	{% block main %}
 	{% endblock %}
 
 	{% block footer %}
-	<footer class="site-footer">
-		site-footer
-	</footer>
-
+		{{ include('footer.twig') }}
 	{% endblock %}
 {% endblock %}

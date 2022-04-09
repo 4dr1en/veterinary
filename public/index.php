@@ -1,14 +1,18 @@
 <?php
+// Application entry point
 
-use Utils\{Router, Parameters};
-use App\Controllers\{HomeController, ListController};
+namespace App;
+
+use Utils\{Router, Parameters, ContainerManager};
 
 require_once '../vendor/autoload.php';
 
 Parameters::load();
 
-$router = new Router();
-$router
-	->setRoute('home', '/', HomeController::class)
-	->setRoute('list', '/list', ListController::class);
+// Load the routes
+require_once '../routes.php';
+
+// call the controller for the current uri
+$container = ContainerManager::getContainer();
+$router = $container->get(Router::class);
 $router->callCurPathController();

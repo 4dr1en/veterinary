@@ -8,22 +8,21 @@ class Veterinarian extends AbstractEntity
 	use TraitImagePath;
 
 	public function __construct(
-		protected ?string $_id = null,
-		protected ?string $_firstname = null,
-		protected ?string $_lastname = null,
-		protected ?string $_address = null,
-		protected ?string $_phoneNumber = null,
-		protected ?string $_email = null,
-		protected ?string $_informations = null,
-		protected ?bool $_gender = null,
-		protected ?string $_veterinarianPracticeId = null,
-		protected ?string $_imagePath = null,
-		protected ?string $_speciality = null,
-		protected ?string $_veterinaryPraticeId = null,
-		protected ?string $_upperHierarchyId = null,
-		protected ?\DateTime $_entryDate = null,
-		protected ?\DateTime $_exitDate = null,
-		protected int $_carPerDay = 0,
+		private ?string $_id = null,
+		private ?string $_firstname = null,
+		private ?string $_lastname = null,
+		private ?string $_address = null,
+		private ?string $_phoneNumber = null,
+		private ?string $_email = null,
+		private ?string $_informations = null,
+		private ?bool $_gender = null,
+		private ?string $_imagePath = null,
+		private ?string $_speciality = null,
+		private ?string $_veterinaryPracticeId = null,
+		private ?string $_upperHierarchyId = null,
+		private ?\DateTime $_entryDate = null,
+		private ?\DateTime $_exitDate = null,
+		private ?int $_carePerDay = null,
 	) {
 	}
 
@@ -46,28 +45,6 @@ class Veterinarian extends AbstractEntity
 	public function setId(string $id): self
 	{
 		$this->_id = $id;
-
-		return $this;
-	}
-
-	/**
-	 * Get the value of _veterinarianPracticeId
-	 *
-	 * @return  string|null
-	 */
-	public function getVeterinarianPracticeId(): ?string
-	{
-		return $this->_veterinarianPracticeId;
-	}
-
-	/**
-	 * Set the value of _veterinarianPracticeId
-	 *
-	 * @return  self
-	 */
-	public function setVeterinarianPracticeId(string $veterinarianPracticeId): self
-	{
-		$this->_veterinarianPracticeId = $veterinarianPracticeId;
 
 		return $this;
 	}
@@ -117,23 +94,23 @@ class Veterinarian extends AbstractEntity
 	}
 
 	/**
-	 * Get the value of _veterinaryPraticeId
+	 * Get the value of _veterinaryPracticeId
 	 *
 	 * @return  string|null
 	 */
-	public function getVeterinaryPraticeId(): ?string
+	public function getVeterinaryPracticeId(): ?string
 	{
-		return $this->_veterinaryPraticeId;
+		return $this->_veterinaryPracticeId;
 	}
 
 	/**
-	 * Set the value of _veterinaryPraticeId
+	 * Set the value of _veterinaryPracticeId
 	 *
 	 * @return  self
 	 */
-	public function setVeterinaryPraticeId(string $veterinaryPraticeId): self
+	public function setVeterinaryPracticeId(string $veterinaryPracticeId): self
 	{
-		$this->_veterinaryPraticeId = $veterinaryPraticeId;
+		$this->_veterinaryPracticeId = $veterinaryPracticeId;
 
 		return $this;
 	}
@@ -205,24 +182,38 @@ class Veterinarian extends AbstractEntity
 	}
 
 	/**
-	 * Get the value of _carPerDay
+	 * Get the value of _carePerDay
 	 *
-	 * @return  int
+	 * @return  int|null
 	 */
-	public function getCarPerDay(): int
+	public function getCarePerDay(): ?int
 	{
-		return $this->_carPerDay;
+		return $this->_carePerDay;
 	}
 
 	/**
-	 * Set the value of _carPerDay
+	 * Set the value of _carePerDay
 	 *
 	 * @return  self
 	 */
-	public function setCarPerDay(int $carPerDay): self
+	public function setCarePerDay(int $carePerDay): self
 	{
-		$this->_carPerDay = $carPerDay;
+		$this->_carePerDay = $carePerDay;
 
 		return $this;
+	}
+
+	/**
+	 * get the main informations about the veterinarian
+	 * 
+	 * @return  string
+	*/
+	public function __toString(): string
+	{
+		$return = $this->_firstname . ' ' . $this->_lastname;
+		if($this->_speciality){
+			$return .= ' | ' . $this->_speciality;
+		}
+		return $return;
 	}
 }

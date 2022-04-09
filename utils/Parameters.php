@@ -2,7 +2,7 @@
 
 namespace Utils;
 
-abstract class Parameters
+class Parameters
 {
 	private static array|bool $_parameters;
 

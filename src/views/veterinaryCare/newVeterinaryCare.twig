@@ -1,0 +1,68 @@
+{% extends "body.twig" %}
+
+{% block main %}
+
+<main class="container">
+
+		<h1 class="display-4 mt-4 mb-5">New care</h1>
+
+		<form action="/new-veterinary-care" method="post" class="mb-5">
+			<div class="form-group col-md-3 mb-2">
+				<label for="name">Name</label>
+				<input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+			</div>
+			<div class="form-group col-md-3 mb-2">
+				<label for="animal">Animal</label>
+				<select class="form-control" id="animal" name="animal">
+					<option value="" selected>Animal</option>
+					{% for animal in animals %}
+						<option value="{{ animal.id }}">{{ animal.name }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="form-group col-md-3 mb-2">
+				<label for="specialty">Veterinarian</label>
+				<select class="form-control" id="veterinarian" name="veterinarian">
+					<option value="" selected>Veterinarian</option>
+					{% for veterinarian in veterinarians %}
+						<option value="{{veterinarian.id}}">
+							{{veterinarian}}
+						</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="form-group col-md-3 mb-2">
+				<label for="image">Room</label>
+				<select class="form-control" id="room" name="room">
+					<option value="" selected>Room</option>
+					{% for room in rooms %}
+						<option value="{{ room.id }}">{{ room.name }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="form-group col-md-3 mb-2">
+				<label for="startDate">Start Date</label>
+				<input type="datetime-local" class="form-control" id="startDate" name="startDate">
+			</div>
+			<div class="form-group col-md-3 mb-2">
+				<label for="endDate">End Date</label>
+				<input type="datetime-local" class="form-control" id="endDate" name="endDate">
+			</div>
+			<div class="form-group col-md-3 mb-2">
+				<label for="price">Price</label>
+				<input type="number" class="form-control" id="price" name="price" min="0" step="0.01">
+			</div>
+			<div class="form-group col-md-3 mb-2">
+				<label for="isPaid">Is Paid</label>
+				<input type="checkbox" role="switch" id="isPaid" name="isPaid">
+			</div>
+			<div class="form-group col-md-3 mb-2">
+				<label for="informations">Informations</label>
+				<textarea class="form-control" id="informations" name="informations" rows="3"></textarea>
+			</div>
+
+			<button type="submit" class="btn btn-primary mt-2">Submit</button>
+		</form>
+
+</main>
+{% endblock %}

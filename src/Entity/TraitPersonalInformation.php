@@ -9,12 +9,12 @@ Namespace App\Entity;
  */
 trait TraitPersonalInformation
 {
-	protected ?string $_firstname;
-	protected ?string $_lastname;
-	protected ?string $_address;
-	protected ?string $_phoneNumber;
-	protected ?string $_email;
-	protected ?string $_informations;
+	private ?string $_firstname;
+	private ?string $_lastname;
+	private ?string $_address;
+	private ?string $_phoneNumber;
+	private ?string $_email;
+	private ?string $_informations;
 
 	/**
 	 * Get the value of _firstname

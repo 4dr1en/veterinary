@@ -1,0 +1,30 @@
+{% extends "body.twig" %}
+
+{% block main %}
+
+
+<div class="container mt-5">
+	<h1 class="show-1 mb-4">
+		{{ customer.firstname | capitalize}}
+		-
+		{{ customer.lastname | upper}}
+	</h1>
+
+	{% if customer.address is not null %}
+		<p class="mb-3"><b>Address :</b> {{ customer.address }}</p>
+	{% endif %}
+	{% if customer.phoneNumber is not null %}
+		<p class="mb-3"><b>Phone number :</b> {{ customer.phoneNumber }}</p>
+	{% endif %}
+	{% if customer.email is not null %}
+		<p class="mb-3"><b>Email :</b> {{ customer.email }}</p>
+	{% endif %}
+	{% if customer.registrationDate is not null %}
+		<p class="card-text mb-3"><b>registration date :</b> {{ customer.registrationDate |date("d/m/Y") }}</p>
+	{% endif %}
+	{% if customer.informations is not null %}
+		<p class="mb-3 mt-3">{{ customer.informations }}</p>
+	{% endif %}
+</div>
+
+{% endblock %}

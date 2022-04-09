@@ -1,0 +1,26 @@
+{% extends "body.twig" %}
+
+{% block main %}
+<main class="container my-5">
+	<div class="table-responsive">
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Link</th>
+            </tr>
+          </thead>
+          <tbody>
+
+	      	{% for veterinaryPractice in veterinaryPractices %}
+            <tr>
+              <td>{{ veterinaryPractice.name }}</td>
+              <td><a href="/veterinary-practice/{{  veterinaryPractice.id }}">Lien</a></td>
+            </tr>
+		      {% endfor %}
+          
+          </tbody>
+        </table>
+      </div>
+</main>
+{% endblock %}

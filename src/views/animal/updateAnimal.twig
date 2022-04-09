@@ -1,0 +1,72 @@
+{% extends "body.twig" %}
+
+{% block main %}
+	<main>
+		<div class="container">
+			<h1 class="display-4 mt-4 mb-3">Update {{ oldAnimal.name }}l</h1>
+
+			<form action="/animal/update/{{ oldAnimal.id }}" method="post" enctype="multipart/form-data">
+				<div class="form-group col-md-3">
+					<label for="name">Name</label>
+					<input type="text" class="form-control" id="name" name="name" placeholder="Name" value="{{ oldAnimal.name }}">
+				</div>
+				<div class="form-group col-md-3">
+					<label for="birthDate">Birth date</label>
+					<input type="date" class="form-control" id="birth-date" name="birthDate" placeholder="birthDate" value="{{ oldAnimal.birthDate|date("Y-m-d") }}">
+				</div>
+				<div class="form-group col-md-3">
+					<label for="species">Species</label>
+					<input type="text" class="form-control" id="species" name="species" placeholder="species"  value="{{ oldAnimal.species }}">
+				</div>
+				<div class="form-group col-md-3">
+					<label for="firstVisit">Date of the first visit</label>
+					<input type="date" class="form-control" id="first-isit" name="firstVisit" placeholder="firstVisit"  value="{{ oldAnimal.firstVisit|date("Y-m-d") }}">
+				</div>
+				<div class="form-group col-md-3">
+					<label for="gender">Gender</label>
+					<select name="gender" class="form-select" aria-label="Gender">
+						<option value="">select the gender</option>
+						<option value="0"  {{ oldAnimal.gender is same as(false) ? 'selected' : '' }}>Female</option>
+						<option value="1" {{ oldAnimal.gender is same as(true) ? 'selected' : '' }}>Male</option>
+					</select>
+				</div>
+				<div class="form-group col-md-4">
+					<label for="image">Photo of the animal</label>
+					<input type="file" name="image" class="form-control" id="image" accept=".jpg, .png, .webp"/>
+				</div>
+				<div class="form-group col-md-6">
+					<label for="treatment">Treatment</label>
+					<textarea class="form-control" id="treatment" name="treatment" rows="3">{{ oldAnimal.treatment }}</textarea>
+				</div>
+				<div class="form-group col-md-3">
+					<label for="favoriteVeterinarian">Favorite veterinarian</label>
+					<select name="favoriteVeterinarian" class="form-select" aria-label="Favorite veterinarian">
+						<option value="">select the favorite veterinarian</option>
+
+						{% for veterinarian in veterinarians %}
+							<option value="{{veterinarian.id}}" {{ veterinarian.id is same as(oldAnimal.favoriteVeterinarian.id) ? 'selected' : ''}}>{{ veterinarian }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="form-group col-md-3">
+					<label for="owner">Owner</label>
+					<select name="owner" class="form-select" aria-label="Owner">
+						<option value="">select the owner</option>
+						{% for customer in customers %}
+							<option value="{{customer.id}}" {{(customer.id == oldAnimal.ownerId)? 'selected' : ''}}>
+								{{customer.firstname}} {{customer.lastname}}
+							</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="form-group col-md-3">
+					<label for="deathDate">Date of the death</label>
+					<input type="date" class="form-control" id="death-date" name="deathDate" placeholder="deathDate" value="{{oldAnimal.deathDate|date("Y-m-d")}}">
+				</div>
+
+
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+	</main>
+{% endblock %}

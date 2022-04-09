@@ -5,19 +5,22 @@ namespace App\Entity;
 use App\Models\AbstractModel;
 use DateTime;
 
-class VeterinarianCare extends AbstractEntity
+class VeterinaryCare extends AbstractEntity
 {
 	public function __construct(
-		protected ?int $_id = null,
-		protected ?string $_name = null,
-		protected ?string $_animalId = null,
-		protected ?string $_veterinarianId = null,
-		protected ?int $_roomId = null,
-		protected ?DateTime $_startDate = null,
-		protected ?DateTime $_endDate = null,
-		protected ?int $_price = null,
-		protected ?bool $_isPaid = false,
-		protected ?string $_informations = null
+		private ?int $_id = null,
+		private ?string $_name = null,
+		private ?string $_animalId = null,
+		private ?string $_veterinarianId = null,
+		private ?int $_roomId = null,
+		private ?DateTime $_startDate = null,
+		private ?DateTime $_endDate = null,
+		private ?int $_price = null,
+		private ?bool $_isPaid = false,
+		private ?string $_informations = null,
+		private ?Animal $_animal = null,
+		private ?Veterinarian $_veterinarian = null,
+		private ?Room $_room = null
 	) {
 	}
 
@@ -247,6 +250,75 @@ class VeterinarianCare extends AbstractEntity
 	public function setInformations(string $informations): self
 	{
 		$this->_informations = $informations;
+
+		return $this;
+	}
+
+	/**
+	 * Get the value of _animal
+	 * 
+	 * @return  Animal|null
+	 */ 
+	public function getAnimal(): ?Animal
+	{
+		return $this->_animal;
+	}
+
+	/**
+	 * Set the value of _animal
+	 *
+	 * @param  Animal $animal
+	 * @return  self
+	 */ 
+	public function setAnimal($_animal): self
+	{
+		$this->_animal = $_animal;
+
+		return $this;
+	}
+
+	/**
+	 * Get the value of _veterinarian
+	 * 
+	 * @return  Veterinarian|null
+	 */ 
+	public function getVeterinarian(): ?Veterinarian
+	{
+		return $this->_veterinarian;
+	}
+
+	/**
+	 * Set the value of _veterinarian
+	 *
+	 * @param  Veterinarian $veterinarian
+	 * @return  self
+	 */ 
+	public function setVeterinarian($_veterinarian): self
+	{
+		$this->_veterinarian = $_veterinarian;
+
+		return $this;
+	}
+
+	/**
+	 * Get the value of _room
+	 * 
+	 * @return  Room|null
+	 */ 
+	public function getRoom(): ?Room
+	{
+		return $this->_room;
+	}
+
+	/**
+	 * Set the value of _room
+	 *
+	 * @param  Room $room
+	 * @return  self
+	 */ 
+	public function setRoom($_room): self
+	{
+		$this->_room = $_room;
 
 		return $this;
 	}

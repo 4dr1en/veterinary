@@ -2,11 +2,13 @@
 
 Namespace App\Models;
 
+use \PDO;
+
 abstract class AbstractModel
 {
-	private \PDO $_pdo;
+	protected PDO $_pdo;
 
-	public function __construct(\PDO $pdo)
+	public function __construct(PDO $pdo)
 	{
 		$this->_pdo = $pdo;
 	}

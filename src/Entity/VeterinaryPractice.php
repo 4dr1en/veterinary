@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-class VeterinarianPractice extends AbstractEntity
+class VeterinaryPractice extends AbstractEntity
 {
 	public function __construct(
-		protected ?string $_id = null,
-		protected ?string $_name = null,
-		protected ?string $_address = null,
+		private ?string $_id = null,
+		private ?string $_name = null,
+		private ?string $_address = null,
 	) {
 	}
 

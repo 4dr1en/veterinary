@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use Utils\ContainerManager;
+use Ramsey\Uuid\Uuid;
 
 abstract class AbstractController
 {
@@ -10,29 +11,31 @@ abstract class AbstractController
 	protected \DI\Container $_container;
 	private \Twig\Environment $_twig;
 
-	public function __construct(\Twig\Environment $environment) {
+	public function __construct(\Twig\Environment $environment, \Utils\Router $router) {
 		$this->_container = ContainerManager::getContainer();
 		$this->_twig = $environment;
+		$this->_router = $router;
 	}
 
 	/**
 	 * Render a template
+	 *
 	 * @param  string $template
 	 * @param  array  $data
 	 * @return void
 	 */
 	protected function render(string $template, array $data = []): void
 	{
-		/*$loader = new \Twig\Loader\FilesystemLoader($_SERVER['DOCUMENT_ROOT'] . '/src/views');
-		$twig = new \Twig\Environment($loader, [
-			'cache' => $_SERVER['DOCUMENT_ROOT'] . '/cache/twig/',
-			'debug' => true,
-		]);
-
-		echo $twig->render($template, $data);*/
-
-
-		//$twig = $this->_container->get(\Twig\Environment::class);
 		echo $this->_twig->render($template, $data);
+	}
+
+	/**
+	 * Generate uuid
+	 *
+	 * @return string
+	 */
+	protected function generateUuid(): string
+	{
+		return Uuid::uuid4()->toString();
 	}
 }

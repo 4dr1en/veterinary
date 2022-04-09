@@ -9,7 +9,7 @@ Namespace App\Entity;
  */
 trait TraitImagePath
 {
-	protected ?string $_imagePath;
+	private ?string $_imagePath;
 
 	/**
 	 * Get the value of _imagePath

@@ -7,58 +7,82 @@ class Customer extends AbstractEntity
 	use TraitPersonalInformation;
 
 	public function __construct(
-		protected ?string $_id = null,
-		protected ?string $_firstname = null,
-		protected ?string $_lastname = null,
-		protected ?string $_address = null,
-		protected ?string $_phoneNumber = null,
-		protected ?string $_email = null,
-		protected ?string $_informations = null,
-		protected ?\DateTime $_RegistrationDate = null,
-		protected ?string $_veterinarianPracticeId = null
+		private ?string $_id = null,
+		private ?string $_firstname = null,
+		private ?string $_lastname = null,
+		private ?string $_address = null,
+		private ?string $_phoneNumber = null,
+		private ?string $_email = null,
+		private ?string $_informations = null,
+		private ?\DateTime $_registrationDate = null,
+		private ?string $_veterinaryPracticeId = null
 	) {
 	}
 
+
 	/**
-	 * Get the value of _RegistrationDate
+	 * Get the value of _id
 	 *
-	 * @return  \DateTime|null
+	 * @return  int|null
 	 */
-	public function getRegistrationDate(): ?\DateTime
+	public function getId(): ?int
 	{
-		return $this->_RegistrationDate;
+		return $this->_id;
 	}
 
 	/**
-	 * Set the value of _RegistrationDate
+	 * Set the value of _id
 	 *
+	 * @param  int $id
 	 * @return  self
 	 */
-	public function setRegistrationDate(\DateTime $_RegistrationDate): self
+	public function setId(int $id): self
 	{
-		$this->_RegistrationDate = $_RegistrationDate;
+		$this->_id = $id;
 
 		return $this;
 	}
 
 	/**
-	 * Get the value of _veterinarianPracticeId
+	 * Get the value of _registrationDate
 	 *
-	 * @return  string|null
+	 * @return  \DateTime|null
 	 */
-	public function getVeterinarianPracticeId(): ?string
+	public function getRegistrationDate(): ?\DateTime
 	{
-		return $this->_veterinarianPracticeId;
+		return $this->_registrationDate;
 	}
 
 	/**
-	 * Set the value of _veterinarianPracticeId
+	 * Set the value of _registrationDate
 	 *
 	 * @return  self
 	 */
-	public function setVeterinarianPracticeId(string $_veterinarianPracticeId): self
+	public function setRegistrationDate(\DateTime $registrationDate): self
 	{
-		$this->_veterinarianPracticeId = $_veterinarianPracticeId;
+		$this->_registrationDate = $registrationDate;
+
+		return $this;
+	}
+
+	/**
+	 * Get the value of _veterinaryPracticeId
+	 *
+	 * @return  string|null
+	 */
+	public function getVeterinaryPracticeId(): ?string
+	{
+		return $this->_veterinaryPracticeId;
+	}
+
+	/**
+	 * Set the value of _veterinaryPracticeId
+	 *
+	 * @return  self
+	 */
+	public function setVeterinaryPracticeId(string $veterinaryPracticeId): self
+	{
+		$this->_veterinaryPracticeId = $veterinaryPracticeId;
 
 		return $this;
 	}

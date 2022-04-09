@@ -1,0 +1,17 @@
+{% extends "body.twig" %}
+
+{% block main %}
+
+<div class="container my-5" style="text-align:center">
+
+
+	<div class="row">
+
+		{% for animal in animals %}
+			{% include "animal/animalCard.twig" %}
+		{% endfor %}
+	</div>
+
+</div>
+
+{% endblock %}

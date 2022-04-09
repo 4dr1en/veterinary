@@ -1,0 +1,38 @@
+<div class="col-lg-4 col-xl-6">
+  <div class="card mb-3 " style="max-width: 540px;">
+
+    <div class="row gx-0">
+      <div class="col-md-4">
+        <img src="/uploads/veterinarians/{{ veterinarian.imagePath }}" class="img-fluid rounded-start" alt="veterinarian photo">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h1 class="card-title mb-2">
+            {{ veterinarian.firstname | capitalize}}
+            -
+            {{ veterinarian.lastname | upper}}
+          </h1>
+
+          {% if veterinarian.speciality is not null %}
+            <p class="mb-1">{{ veterinarian.specialty }}</p>
+          {% endif %}
+          {% if veterinarian.email is not null %}
+            <p class="mb-1">{{ veterinarian.email }}</p>
+          {% endif %}
+          {% if veterinarian.phoneNumber is not null %}
+            <p class="mb-1">{{ veterinarian.phoneNumber }}</p>
+          {% endif %}
+          {% if veterinarian.address is not null %}
+            <p class="mb-1">{{ veterinarian.address }}</p>
+          {% endif %}
+
+          <p class="card-text">
+            <small class="text-muted d-flex justify-content-end">
+              <a href="/veterinarian/{{ veterinarian.id }}" class="link-secondary">See the details</a>
+            </small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+{% extends "body.twig" %}
+
+{% block main %}
+<main>
+	<div class="container my-5">
+		<h1>List veterinarian</h1>
+		<section class="row gx-2 mt-3">
+			{% for veterinarian in veterinarians %}
+				{% include "veterinarian/veterinarianCard.twig" %}
+			{% endfor %}
+		</section>
+	</div>
+</main>
+{% endblock %}

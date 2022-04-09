@@ -1,0 +1,51 @@
+{% extends "body.twig" %}
+
+{% block main %}
+
+<div class="container">
+	<div class="mt-5 mb-5 row">
+		<div class="col-md-5">
+			<img src="/uploads/veterinarians/{{ veterinarian.imagePath }}" class="img-fluid rounded-start" alt="veterinarian photo">
+
+		
+			<h1 class="show-1 mb-0">
+				{{ veterinarian.firstname | capitalize}}
+				-
+				{{ veterinarian.lastname | upper}}
+			</h1>
+			{% if veterinarian.gender is not null %}
+				<p class="card-text mb-3">{{ veterinarian.gender ? 'Male' : 'Female' }}</p>
+			{% endif %}
+		</div>
+
+		<div class="col-md-7">
+			{% if veterinarian.speciality is not null %}
+				<p class="mb-3">{{ veterinarian.specialty }}</p>
+			{% endif %}
+			{% if veterinarian.email is not null %}
+				<p class="mb-3">{{ veterinarian.email }}</p>
+			{% endif %}
+			{% if veterinarian.phoneNumber is not null %}
+				<p class="mb-3">{{ veterinarian.phoneNumber }}</p>
+			{% endif %}
+			{% if veterinarian.address is not null %}
+				<p class="mb-3">{{ veterinarian.address }}</p>
+			{% endif %}
+			{% if veterinarian.carePerDay is not null %}
+				<p class="mb-3"><b>Care per day :</b> {{ veterinarian.carePerDay }}</p>
+			{% endif %}
+			{% if veterinarian.entryDate is not null %}
+				<p class="card-text mb-3"><b>Entry date :</b> {{ veterinarian.entryDate |date("d/m/Y") }}</p>
+			{% endif %}
+			{% if veterinarian.exitDate is not null %}
+				<p class="card-text mb-3"><b>Exit date :</b> {{ veterinarian.exitDate |date("d/m/Y") }}</p>
+			{% endif %}
+
+			{% if veterinarian.informations is not null %}
+				<p class="mb-3 mt-3">{{ veterinarian.informations }}</p>
+			{% endif %}
+		</div>
+	</div>
+</div>
+
+{% endblock %}

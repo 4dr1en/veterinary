@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
-class Customer extends AbstractEntity
+class Room extends AbstractEntity
 {
 	public function __construct(
-		protected ?int $_id = null,
-		protected ?string $_name = null,
-		protected ?string $_speciality = null,
-		protected ?string $_veterinaryPracticeId = null
+		private ?int $_id = null,
+		private ?string $_name = null,
+		private ?string $_speciality = null,
+		private ?string $_veterinaryPracticeId = null,
+		private ?VeterinaryPractice $_veterinaryPractice = null
 	) {
 	}
 
@@ -100,6 +101,28 @@ class Customer extends AbstractEntity
 	public function setVeterinaryPracticeId(string $veterinaryPracticeId): self
 	{
 		$this->_veterinaryPracticeId = $veterinaryPracticeId;
+
+		return $this;
+	}
+
+	/**
+	 * Get the value of _veterinaryPractice
+	 * 
+	 * @return  VeterinaryPractice|null
+	 */
+	public function getVeterinaryPractice(): ?VeterinaryPractice
+	{
+		return $this->_veterinaryPractice;
+	}
+
+	/**
+	 * Set the value of _veterinaryPractice
+	 *
+	 * @return  self
+	 */
+	public function setVeterinaryPractice($veterinaryPractice): self
+	{
+		$this->_veterinaryPractice = $veterinaryPractice;
 
 		return $this;
 	}

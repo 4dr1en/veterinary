@@ -7,18 +7,20 @@ class Animal extends AbstractEntity
 	use TraitImagePath;
 
 	public function __construct(
-		protected ?string $_id = null,
-		protected ?string $_name = null,
-		protected ?\dateTime $_birthDate = null,
-		protected ?string $_species = null,
-		protected ?\DateTime $_firstVisit = null,
-		protected ?bool $_gender = null,
-		protected ?string $_imagePath = null,
-		protected ?int $_treatment = null,
-		protected ?string $_favoriteVeterinarianId = null,
-		protected ?string $_ownerId = null,
-		protected ?\DateTime $_deathDate = null,
-		protected ?string $_informations = null
+		private ?string $_id = null,
+		private ?string $_name = null,
+		private ?\dateTime $_birthDate = null,
+		private ?string $_species = null,
+		private ?\DateTime $_firstVisit = null,
+		private ?bool $_gender = null,
+		private ?string $_imagePath = null,
+		private ?string $_treatment = '',
+		private ?string $_favoriteVeterinarianId = null,
+		private ?string $_ownerId = null,
+		private ?\DateTime $_deathDate = null,
+		private ?string $_informations = null,
+		private ?Veterinarian $_favoriteVeterinarian = null,
+		private ?Customer $_owner = null
 	) {
 	}
 
@@ -163,9 +165,9 @@ class Animal extends AbstractEntity
 	/**
 	 * Get the value of _treatment
 	 *
-	 * @return  int|null
+	 * @return  string|null
 	 */
-	public function getTreatment(): ?int
+	public function getTreatment(): ?string
 	{
 		return $this->_treatment;
 	}
@@ -173,10 +175,10 @@ class Animal extends AbstractEntity
 	/**
 	 * Set the value of _treatment
 	 *
-	 * @param   int $treatment
+	 * @param   string $treatment
 	 * @return  self
 	 */
-	public function setTreatment(int $treatment): self
+	public function setTreatment(string $treatment): self
 	{
 		$this->_treatment = $treatment;
 
@@ -272,6 +274,50 @@ class Animal extends AbstractEntity
 	public function setInformations(string $informations): self
 	{
 		$this->_informations = $informations;
+
+		return $this;
+	}
+
+	/**
+	 * Get the value of _favoriteVeterinarian
+	 * 
+	 * @return Veterinarian|null
+	 */ 
+	public function getFavoriteVeterinarian(): ?Veterinarian
+	{
+		return $this->_favoriteVeterinarian;
+	}
+
+	/**
+	 * Set the value of _favoriteVeterinarian
+	 *
+	 * @return  self
+	 */ 
+	public function setFavoriteVeterinarian($favoriteVeterinarian): self
+	{
+		$this->_favoriteVeterinarian = $favoriteVeterinarian;
+
+		return $this;
+	}
+
+	/**
+	 * Get the value of _owner
+	 * 
+	 * @return  Customer|null
+	 */
+	public function getOwner(): ?Customer
+	{
+		return $this->_owner;
+	}
+
+	/**
+	 * Set the value of _owner
+	 *
+	 * @return  self
+	 */ 
+	public function setOwner($owner): self
+	{
+		$this->_owner = $owner;
 
 		return $this;
 	}

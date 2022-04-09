@@ -1,0 +1,48 @@
+{% extends "body.twig" %}
+
+{% block main %}
+<main>
+	<div class="container mt-5 mb-5">
+		<h1>{{ animal.name }}</h1>
+
+		<img src="/uploads/animals/{{ animal.imagePath }}" class="img-fluid rounded-start" alt="animal">
+
+		{% if animal.gender is not null %}
+			<p class="card-text mb-3">{{ animal.gender ? 'Male' : 'Female' }}</p>
+		{% endif %}
+		
+		{% if animal.species is not null %}
+			<p class="mb-3"><b>Species: </b>{{ animal.species }}</p>
+		{% endif %}
+		{% if animal.birthDate is not null %}
+			<p class="mb-3"><b>Birth date: </b>{{ animal.birthDate |date("d/m/Y") }}</p>
+		{% endif %}
+		{% if animal.deathDate is not null %}
+			<p class="mb-3"><b>Death date: </b>{{ animal.deathDate |date("d/m/Y") }}</p>
+		{% endif %}
+		{% if animal.favoriteVeterinarianId is not null %}
+			<p class="mb-3"><b>Favorite veterinarian: </b>{{ animal.favoriteVeterinarianId }}</p>
+		{% endif %}
+		{% if animal.favoriteVeterinarian.firstname is not null or animal.favoriteVeterinarian.lastname is not null %}
+			<p class="mb-3"><b>Favorite veterinarian: </b><a href="/veterinarian/{{ animal.favoriteVeterinarian.id }}">{{ animal.favoriteVeterinarian.firstname }} {{ animal.favoriteVeterinarian.lastname }}</a></p>
+		{% endif %}
+		{% if animal.owner.firstname is not null or animal.owner.lastname is not null %}
+			<p class="mb-3"><b>Owner: </b><a href="/customer/{{ animal.owner.id }}">{{ animal.owner.firstname }} {{ animal.owner.lastname }}</a></p>
+		{% endif %}
+
+		{% if animal.informations is not null %}
+			<h2>Informations</h2>
+			<p class="mb-3 mt-3">{{ animal.informations }}</p>
+		{% endif %}
+		{% if animal.treatment is not null %}
+			<h2>Treatment</h2>
+			<p class="mb-3 mt-3">{{ animal.treatment }}</p>
+		{% endif %}
+
+		<div class="mt-3">
+			<a class="text-warning" href="/animal/update/{{animal.id}}">Update</a>
+		</div>
+		
+	</div>
+</main>
+{% endblock %}

@@ -2,7 +2,11 @@
 
 Namespace Utils;
 
-abstract class ContainerManager {
+use Psr\Container\ContainerInterface;
+use Twig\Extra\Intl\IntlExtension;
+use Twig\Extension\DebugExtension;
+
+class ContainerManager {
 
 	private static $_container;
 
@@ -27,18 +31,24 @@ abstract class ContainerManager {
 				null
 			),
 			\App\Models\abstractModel::class => \DI\create()->constructor(\DI\get(PDO::class)),
-			\Twig\Environment::class => \DI\create()->constructor(
-				\DI\get(\Twig\Loader\FilesystemLoader::class),
-				[
-					'cache' => $twigParameters['CacheDir'] ? $_SERVER['DOCUMENT_ROOT'] . $twigParameters['CacheDir'] : false,
-					'debug' => $twigParameters['Debug'],
-				]
-			),
 			\Twig\Loader\FilesystemLoader::class => \DI\create()->constructor(
 				[
 					$_SERVER['DOCUMENT_ROOT'] . $twigParameters['TemplateDir'],
 				]
 			),
+			\Twig\Environment::class => function (ContainerInterface $c) use ($twigParameters){
+				$twig = new \Twig\Environment(
+					$c->get( \Twig\Loader\FilesystemLoader::class ),
+					[
+						'cache' => $twigParameters['CacheDir'] ? $_SERVER['DOCUMENT_ROOT'] . $twigParameters['CacheDir'] : false,
+						'debug' => $twigParameters['Debug'],
+					]
+				);
+				$twig->addExtension(new IntlExtension());
+				$twig->addExtension(new DebugExtension());
+				return $twig;
+			},
+
 			\App\Controllers\AbstractController::class => \DI\create()->constructor(\DI\get(Twig\Environment::class)),
 		]);
 
