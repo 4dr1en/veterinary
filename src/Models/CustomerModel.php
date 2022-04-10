@@ -13,7 +13,13 @@ class CustomerModel extends AbstractModel
 	 */
 	public function getAll(): ?array
 	{
-		$query = $this->_pdo->prepare('SELECT * FROM Customer');
+		$query = $this->_pdo->prepare(
+			'SELECT Customer.*, SUM(Veterinary_care.price) as turnover
+			FROM Customer
+			LEFT JOIN Animal ON Customer.id = Animal.owner_id
+			LEFT JOIN Veterinary_care ON Animal.id = Veterinary_care.animal_id
+			GROUP BY Customer.id'
+		);
 		$query->execute();
 		$customersData = $query->fetchAll();
 		$customers = [];
@@ -33,7 +39,14 @@ class CustomerModel extends AbstractModel
 	 */
 	public function getOne(int $id): ?Customer
 	{
-		$query = $this->_pdo->prepare('SELECT * FROM Customer WHERE id = :id');
+		$query = $this->_pdo->prepare(
+			'SELECT Customer.*, SUM(Veterinary_care.price) as turnover
+			FROM Customer
+			LEFT JOIN Animal ON Customer.id = Animal.owner_id
+			LEFT JOIN Veterinary_care ON Animal.id = Veterinary_care.animal_id
+			WHERE Customer.id = :id
+			GROUP BY Customer.id'
+		);
 		$query->bindValue(':id', $id, PDO::PARAM_INT);
 		$query->execute();
 
@@ -49,7 +62,9 @@ class CustomerModel extends AbstractModel
 	 */
 	public function getLast(): ?Customer
 	{
-		$query = $this->_pdo->prepare('SELECT * FROM Customer ORDER BY id DESC LIMIT 1');
+		$query = $this->_pdo->prepare(
+			'SELECT * FROM Customer ORDER BY id DESC LIMIT 1
+		');
 		$query->execute();
 
 		$customer = $this->populate($query->fetch());
@@ -156,7 +171,8 @@ class CustomerModel extends AbstractModel
 			$data['email'],
 			$data['informations'],
 			$data['registration_date'] ? new \DateTime($data['registration_date']) : null,
-			$data['veterinary_practice_id']
+			$data['veterinary_practice_id'],
+			$data['turnover']
 		);
 
 		return $customer;

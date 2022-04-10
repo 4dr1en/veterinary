@@ -2,7 +2,6 @@
 
 {% block main %}
 
-
 <div class="container mt-5">
 	<h1 class="show-1 mb-4">
 		{{ customer.firstname | capitalize}}
@@ -25,9 +24,19 @@
 	{% if customer.informations is not null %}
 		<p class="mb-3 mt-3">{{ customer.informations }}</p>
 	{% endif %}
+	{% if customer.turnover is not null %}
+		<p class="mb-3"><b>Global turnover for this customer :</b> {{ (customer.turnover/100)|format_currency('USD', {fraction_digit: 2}, 'US') }}</p>
+	{% endif %}
 
 	<div>
 		<a class="text-warning" href="/customer/update/{{ customer.id }}">Update</a>
+	</div>
+
+	<h2 class="my-5">Animals of the customer</h2>
+	<div class="row">
+		{% for animal in animals %}
+			{% include "animal/animalCard.twig" %}
+		{% endfor %}
 	</div>
 </div>
 

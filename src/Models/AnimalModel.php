@@ -34,6 +34,36 @@ class AnimalModel extends AbstractModel
 	}
 
 	/**
+	 * Get all animals by customer
+	 * 
+	 * @param  int $customerId
+	 * @return  array
+	 */
+	public function getAllByCustomer(int $customerId): array
+	{
+		$query = $this->_pdo->prepare(
+			'SELECT Animal.*, sum(Veterinary_care.price) as turnover
+			 FROM Animal
+			 LEFT JOIN Veterinary_care ON Animal.id = Veterinary_care.animal_id
+			WHERE Animal.owner_id = :customerId
+			GROUP BY Animal.id
+		');
+		
+		$query->execute([
+			'customerId' => $customerId
+		]);
+
+		$animalsData = $query->fetchAll();
+		$animals = [];
+
+		foreach ($animalsData as $animalData) {
+			$animals[] = $this->populate($animalData);
+		}
+
+		return $animals;
+	}
+
+	/**
 	 * Get an animal by its id
 	 *
 	 * @param  string $id

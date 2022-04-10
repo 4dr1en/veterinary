@@ -5,6 +5,7 @@ namespace App\Entity;
 class Customer extends AbstractEntity
 {
 	use TraitPersonalInformation;
+	use TraitTurnover;
 
 	public function __construct(
 		private ?string $_id = null,
@@ -15,10 +16,10 @@ class Customer extends AbstractEntity
 		private ?string $_email = null,
 		private ?string $_informations = null,
 		private ?\DateTime $_registrationDate = null,
-		private ?string $_veterinaryPracticeId = null
+		private ?string $_veterinaryPracticeId = null,
+		private ?int $_turnover = null
 	) {
 	}
-
 
 	/**
 	 * Get the value of _id

@@ -1,9 +1,10 @@
 <?php
 namespace App\Controllers;
 
-use App\Controllers\AbstractController;
 use App\Entity\Customer;
+use App\Models\AnimalModel;
 use App\Models\CustomerModel;
+use App\Controllers\AbstractController;
 use App\Models\VeterinaryPracticeModel;
 
 class CustomerController extends AbstractController
@@ -23,7 +24,14 @@ class CustomerController extends AbstractController
 	{
 		$customerModel = $this->_container->get(CustomerModel::class);
 		$customer = $customerModel->getOne($request['id']);
-		$this->render('customer/singleCustomer.twig', ['customer' => $customer]);
+
+		$animalModel = $this->_container->get(AnimalModel::class);
+		$animals = $animalModel->getAllByCustomer($request['id']);
+
+		$this->render('customer/singleCustomer.twig', [
+			'customer' => $customer,
+			'animals' => $animals
+		]);
 	}
 
 	public function new(array $request)
