@@ -16,7 +16,12 @@ class VeterinarianModel extends AbstractModel
 	 */
 	public function getAll(): array
 	{
-		$query = $this->_pdo->prepare('SELECT * FROM Veterinarian');
+		$query = $this->_pdo->prepare(
+			'SELECT Veterinarian.*, sum(Veterinary_care.price) as turnover
+			FROM Veterinarian
+			LEFT JOIN Veterinary_care ON Veterinarian.id = Veterinary_care.veterinarian_id
+			GROUP BY Veterinarian.id
+		');
 		$query->execute();
 		$veterinariansData = $query->fetchAll();
 		$veterinarians = [];
@@ -35,10 +40,39 @@ class VeterinarianModel extends AbstractModel
 	 */
 	public function getAllActive(): array
 	{
-		$query = $this->_pdo->prepare("
-			SELECT * FROM Veterinarian
+		$query = $this->_pdo->prepare(
+			'SELECT Veterinarian.*, sum(Veterinary_care.price) as turnover
+			FROM Veterinarian
+			LEFT JOIN Veterinary_care ON Veterinarian.id = Veterinary_care.veterinarian_id
 			WHERE exit_date IS NULL;
-		");
+			GROUP BY Veterinarian.id
+		');
+		$query->execute();
+		$veterinariansData = $query->fetchAll();
+		$veterinarians = [];
+
+		foreach ($veterinariansData as $veterinarianData) {
+			$veterinarians[] = $this->populate($veterinarianData);
+		}
+
+		return $veterinarians;
+	}
+
+	/**
+	 * Get all veterinarians of a veterinary practice
+	 * 
+	 * @param string $id
+	 * @return array
+	 */
+	public function getAllByVeterinaryPractice(string $id): array
+	{
+		$query = $this->_pdo->prepare(
+			'SELECT Veterinarian.*
+			FROM Veterinarian
+			LEFT JOIN Veterinary_practice ON  Veterinarian.veterinary_practice_id = Veterinary_practice.id
+			WHERE Veterinarian.veterinary_practice_id = :id
+		');
+		$query->bindValue(':id', $id, PDO::PARAM_STR);
 		$query->execute();
 		$veterinariansData = $query->fetchAll();
 		$veterinarians = [];
@@ -59,7 +93,12 @@ class VeterinarianModel extends AbstractModel
 	 */
 	public function getOne(string $id, bool $exhaustivePopulate = true): ?Veterinarian
 	{
-		$query = $this->_pdo->prepare('SELECT * FROM Veterinarian WHERE id = :id');
+		$query = $this->_pdo->prepare(
+			'SELECT Veterinarian.*, sum(Veterinary_care.price) as turnover
+			FROM Veterinarian
+			LEFT JOIN Veterinary_care ON Veterinarian.id = Veterinary_care.veterinarian_id
+			WHERE Veterinarian.id = :id'
+		);
 		$query->bindValue(':id', $id, PDO::PARAM_STR);
 		$query->execute();
 
@@ -135,7 +174,7 @@ class VeterinarianModel extends AbstractModel
 	/**
 	 * Update a veterinarian in the database
 	 *
-	 * @param Veterinarian $veterinarian
+	 * @param  Veterinarian $veterinarian
 	 * @return bool
 	 */
 	public function update(Veterinarian $veterinarian): bool
@@ -190,7 +229,7 @@ class VeterinarianModel extends AbstractModel
 	/**
 	 * Create a new veterinarian object from a database row
 	 * 
-	 * @param array $data
+	 * @param  array $data
 	 * @return Veterinarian|null
 	 */
 	protected function populate($data): ?Veterinarian
@@ -230,7 +269,8 @@ class VeterinarianModel extends AbstractModel
 			$data['exit_date'] ? new \DateTime($data['exit_date']) : null,
 			$data['care_per_day'],
 			$upperHierarchy,
-			$veterinaryPractice
+			$veterinaryPractice,
+			$data['turnover'] ?? null
 		);
 
 		return $veterinarian;
@@ -259,6 +299,9 @@ class VeterinarianModel extends AbstractModel
 			$data['exit_date'] ? new \DateTime($data['exit_date']) : null,
 			$data['care_per_day']
 		);
+
+
+		$veterinarian->setTurnover($data['turnover'] ?? null);
 
 		return $veterinarian;
 	}

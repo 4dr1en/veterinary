@@ -47,6 +47,27 @@ class VeterinaryCareModel extends AbstractModel
 	}
 
 	/**
+	 * Get all veterinary cares by animal id
+	 * 
+	 * @param string $id
+	 * @return array
+	 */
+	public function getAllByAnimal(string $id): ?array
+	{
+		$query = $this->_pdo->prepare('SELECT * FROM Veterinary_care WHERE animal_id = :id');
+		$query->bindValue(':id', $id, PDO::PARAM_STR);
+		$query->execute();
+		$veterinaryCaresData = $query->fetchAll();
+		$veterinaryCares = [];
+
+		foreach ($veterinaryCaresData as $veterinaryCareData) {
+			$veterinaryCares[] = $this->populate($veterinaryCareData);
+		}
+
+		return $veterinaryCares;
+	}
+
+	/**
 	 * Get the last veterinary care
 	 * 
 	 * @return VeterinaryCare|null

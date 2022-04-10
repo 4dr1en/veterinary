@@ -5,6 +5,7 @@ namespace App\Entity;
 class Animal extends AbstractEntity
 {
 	use TraitImagePath;
+	use TraitTurnover;
 
 	public function __construct(
 		private ?string $_id = null,
@@ -20,7 +21,8 @@ class Animal extends AbstractEntity
 		private ?\DateTime $_deathDate = null,
 		private ?string $_informations = null,
 		private ?Veterinarian $_favoriteVeterinarian = null,
-		private ?Customer $_owner = null
+		private ?Customer $_owner = null,
+		private ?int $_turnover = null
 	) {
 	}
 

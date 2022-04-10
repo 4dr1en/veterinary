@@ -1,0 +1,40 @@
+{% extends "body.twig" %}
+
+{% block main %}
+
+	<main class="container">
+		<div class="table-responsive mt-5 mb-5">
+			<table class="table table-striped table-sm">
+				<thead>
+					<tr>
+						<th scope="col">Firstname</th>
+						<th scope="col">Lastname</th>
+						<th scope="col">Link</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for customer in customers %}
+						<tr>
+							<td>
+								{% if customer.firstname is not null %}
+									{{ customer.firstname }}
+								{% endif %}
+							</td>
+							<td>
+								{% if customer.lastname is not null %}
+									{{ customer.lastname }}
+								{% endif %}
+							</td>
+							<td>
+								<a href="/customer/{{ customer.id }}">
+									Link
+								</a>
+							</td>
+						</tr>
+					{% endfor %}
+
+				</tbody>
+			</table>
+		</div>
+	</main>
+{% endblock %}

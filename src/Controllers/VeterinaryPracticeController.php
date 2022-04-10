@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\VeterinarianModel;
+use App\Controllers\AbstractController;
 use App\Models\VeterinaryPracticeModel;
 
 class VeterinaryPracticeController extends AbstractController
@@ -21,8 +23,13 @@ class VeterinaryPracticeController extends AbstractController
 	{
 		$veterinaryPracticeModel = $this->_container->get(VeterinaryPracticeModel::class);
 		$veterinaryPractice = $veterinaryPracticeModel->getOne($request['id']);
+
+		$veterinarianModel = $this->_container->get(VeterinarianModel::class);
+		$veterinarians = $veterinarianModel->getAllByVeterinaryPractice($request['id']);
+
 		$this->render('veterinaryPractice/singleVeterinaryPractice.twig', [
 			'veterinaryPractice' => $veterinaryPractice,
+			'veterinarians' => $veterinarians
 		]);
 	}
 }

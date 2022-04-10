@@ -6,6 +6,7 @@ class Veterinarian extends AbstractEntity
 {
 	use TraitPersonalInformation;
 	use TraitImagePath;
+	use TraitTurnover;
 
 	public function __construct(
 		private ?string $_id = null,
@@ -25,6 +26,7 @@ class Veterinarian extends AbstractEntity
 		private ?int $_carePerDay = null,
 		private ?Veterinarian $_upperHierarchy = null,
 		private ?VeterinaryPractice $_veterinaryPractice = null,
+		private ?int $_turnover = null
 	) {
 	}
 

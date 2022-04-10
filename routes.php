@@ -29,6 +29,7 @@ $router
 	->setRoute('new-veterinarian', '/new-veterinarian', VeterinarianController::class, 'new')
 	->setRoute('update-veterinarian', '/veterinarian/update/{$id}', VeterinarianController::class, 'update')
 
+	->setRoute('customers', '/customers', CustomerController::class)
 	->setRoute('customer', '/customer/{$id}', CustomerController::class, 'show')
 	->setRoute('new-customer', '/new-customer', CustomerController::class, 'new')
 	->setRoute('update-customer', '/customer/update/{$id}', CustomerController::class, 'update')

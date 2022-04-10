@@ -16,7 +16,12 @@ class AnimalModel extends AbstractModel
 	 */
 	public function getAll(): array
 	{
-		$query = $this->_pdo->prepare('SELECT * FROM Animal');
+		$query = $this->_pdo->prepare(
+			'SELECT Animal.*, sum(Veterinary_care.price) as turnover
+			FROM Animal
+			LEFT JOIN Veterinary_care ON Animal.id = Veterinary_care.animal_id
+			GROUP BY Animal.id
+		');
 		$query->execute();
 		$animalsData = $query->fetchAll();
 		$animals = [];
@@ -36,9 +41,11 @@ class AnimalModel extends AbstractModel
 	 */
 	public function getOne(string $id): ?Animal
 	{
-		$query = $this->_pdo->prepare('
-			SELECT * FROM Animal
-			WHERE id = :id
+		$query = $this->_pdo->prepare(
+			'SELECT Animal.*, sum(Veterinary_care.price) as turnover
+			FROM Animal
+			LEFT JOIN Veterinary_care ON Animal.id = Veterinary_care.animal_id
+			WHERE Animal.id = :id
 		');
 		$query->setFetchMode(PDO::FETCH_ASSOC);
 		$query->bindValue(':id', $id, \PDO::PARAM_STR);
@@ -89,7 +96,8 @@ class AnimalModel extends AbstractModel
 			_deathDate: $data['death_date'] ? new \DateTime($data['death_date']) : null,
 			_informations: $data['informations'],
 			_favoriteVeterinarian: $favoriteVeterinarian,
-			_owner: $owner
+			_owner: $owner,
+			_turnover: $data['turnover']
 		);
 
 		return $animal;

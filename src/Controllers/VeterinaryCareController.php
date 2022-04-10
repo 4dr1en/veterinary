@@ -36,7 +36,6 @@ class VeterinaryCareController extends AbstractController
 		$veterinaryCareModel = $this->_container->get(VeterinaryCareModel::class);
 
 		if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($request)) {
-			var_dump($request);
 			$veterinaryCare = new VeterinaryCare(
 				_name: $request['name'] ?? null,
 				_animalId: $request['animal'] ?? null,

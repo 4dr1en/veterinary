@@ -6,6 +6,7 @@ use App\Models\AnimalModel;
 use App\Models\CustomerModel;
 use App\Models\VeterinarianModel;
 use App\Controllers\SaveImageTrait;
+use App\Models\VeterinaryCareModel;
 use App\Controllers\AbstractController;
 
 class AnimalController extends AbstractController
@@ -27,8 +28,12 @@ class AnimalController extends AbstractController
 		$animalModel = $this->_container->get(AnimalModel::class);
 		$animal = $animalModel->getOne($request['id']);
 
+		$veterinaryCareModel = $this->_container->get(VeterinaryCareModel::class);
+		$veterinaryCares = $veterinaryCareModel->getAllByAnimal($animal->getId());
+
 		$this->render('animal/singleAnimal.twig', [
-			'animal' => $animal
+			'animal' => $animal,
+			'veterinaryCares' => $veterinaryCares
 		]);
 	}
 

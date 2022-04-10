@@ -8,6 +8,17 @@ use App\Models\VeterinaryPracticeModel;
 
 class CustomerController extends AbstractController
 {
+
+	public function index()
+	{
+		$customerModel = $this->_container->get(CustomerModel::class);
+		$customers = $customerModel->getAll();
+
+		$this->render('customer/listCustomer.twig', [
+			'customers' => $customers
+		]);
+	}
+
 	public function show(array $request)
 	{
 		$customerModel = $this->_container->get(CustomerModel::class);

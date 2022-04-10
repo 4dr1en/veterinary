@@ -11,6 +11,13 @@
 	{% if veterinaryPractice.address is not null %}
 		<p class="mb-3"><b>Address :</b> {{ veterinaryPractice.address }}</p>
 	{% endif %}
+
+	<h2 class="mt-5 mb-4">Veterinarian of the vatarinary practice</h2>
+	<section class="row gx-2 mt-3">
+	{% for veterinarian in veterinarians %}
+		{% include "veterinarian/veterinarianCard.twig" %}
+	{% endfor %}
+	</section>
 </div>
 
 {% endblock %}

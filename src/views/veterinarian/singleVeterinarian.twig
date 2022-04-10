@@ -49,6 +49,10 @@
 				<p class="mb-3"><b>UpperHierarchy :</b> <a href="/veterinarian/{{veterinarian.upperHierarchy.id}}">{{ veterinarian.upperHierarchy }}</a></p>
 			{% endif %}
 
+			{% if veterinarian.turnover %}
+				<p class="mb-3"><b>Turnover of the veterinarian :</b> {{ (veterinarian.turnover / 100) |format_currency('USD', {fraction_digit: 2}, 'US')}}</p>
+			{% endif %}
+
 			{% if veterinarian.informations is not null %}
 				<p class="mb-3 mt-3">{{ veterinarian.informations }}</p>
 			{% endif %}
