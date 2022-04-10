@@ -100,6 +100,42 @@ class CustomerModel extends AbstractModel
 	}
 
 	/**
+	 * Update a customer
+	 * 
+	 * @param  Customer $customer
+	 * @return bool
+	 */
+	public function update($customer): bool
+	{
+		$sql = '
+			UPDATE Customer SET
+				firstname = :firstname,
+				lastname = :lastname,
+				registration_date = :registrationDate,
+				address = :address,
+				phone_number = :phoneNumber,
+				email = :email,
+				informations = :informations,
+				veterinary_practice_id = :veterinaryPracticeId
+			WHERE id= :id;
+		';
+
+		$query = $this->_pdo->prepare($sql);
+
+		$query->bindValue(':id', $customer->getId(), PDO::PARAM_INT);
+		$query->bindValue(':firstname', $customer->getFirstname(), PDO::PARAM_STR);
+		$query->bindValue(':lastname', $customer->getLastname(), PDO::PARAM_STR);
+		$query->bindValue(':registrationDate', $customer->getRegistrationDate()?->format('Y-m-d H:i:s') ?: null);
+		$query->bindValue(':address', $customer->getAddress(), PDO::PARAM_STR);
+		$query->bindValue(':phoneNumber', $customer->getPhoneNumber(), PDO::PARAM_STR);
+		$query->bindValue(':email', $customer->getEmail(), PDO::PARAM_STR);
+		$query->bindValue(':informations', $customer->getInformations(), PDO::PARAM_STR);
+		$query->bindValue(':veterinaryPracticeId', $customer->getVeterinaryPracticeId(), PDO::PARAM_STR);
+
+		return $query->execute();
+	}
+
+	/**
 	 * Create a new customer object from a database row
 	 * 
 	 * @param array $data

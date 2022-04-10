@@ -32,7 +32,7 @@
 				<select id="veterinary-practice" name="veterinaryPractice" class="form-select" aria-label="Veterinary practice">
 					<option selected value="">select the veterinary practice</option>
 					{% for veterinaryPractice in veterinaryPractices %}
-						<option value="{{veterinaryPractice.id}}">{{veterinaryPractice.id}}-{{veterinaryPractice.name}}</option>
+						<option value="{{veterinaryPractice.id}}">{{veterinaryPractice.name}}</option>
 					{% endfor %}
 				</select>
 			</div>

@@ -85,7 +85,7 @@ class RoomModel extends AbstractModel
 	 * @param  Room $room
 	 * @return bool
 	 */
-	public function create(Room $animal): bool
+	public function create(Room $room): bool
 	{
 		$query = $this->_pdo->prepare('
 			INSERT INTO Room(
@@ -99,9 +99,9 @@ class RoomModel extends AbstractModel
 			);
 		');
 
-		$query->bindValue(':name', $animal->getName());
-		$query->bindValue(':speciality', $animal->getSpeciality());
-		$query->bindValue(':veterinaryPracticesId', $animal->getVeterinaryPracticeId());
+		$query->bindValue(':name', $room->getName());
+		$query->bindValue(':speciality', $room->getSpeciality());
+		$query->bindValue(':veterinaryPracticesId', $room->getVeterinaryPracticeId());
 
 		return $query->execute();
 	}
@@ -115,16 +115,17 @@ class RoomModel extends AbstractModel
 	public function update(Room $room): bool
 	{
 		$query = $this->_pdo->prepare('
-			UPDATE room SET
+			UPDATE Room SET
 				name = :name,
 				speciality = :speciality,
-				veterinary_practices_id = :veterinaryPracticesId
+				veterinary_practice_id = :veterinaryPracticesId
 			WHERE id = :id
 		');
 
 		$query->bindValue(':name', $room->getName());
 		$query->bindValue(':speciality', $room->getSpeciality());
 		$query->bindValue(':veterinaryPracticesId', $room->getVeterinaryPracticeId());
+		$query->bindValue(':id', $room->getId());
 
 		return $query->execute();
 	}

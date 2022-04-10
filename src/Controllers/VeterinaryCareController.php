@@ -36,6 +36,7 @@ class VeterinaryCareController extends AbstractController
 		$veterinaryCareModel = $this->_container->get(VeterinaryCareModel::class);
 
 		if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($request)) {
+			var_dump($request);
 			$veterinaryCare = new VeterinaryCare(
 				_name: $request['name'] ?? null,
 				_animalId: $request['animal'] ?? null,
@@ -71,6 +72,51 @@ class VeterinaryCareController extends AbstractController
 			'animals' => $animals,
 			'veterinarians' => $veterinarians,
 			'rooms' => $rooms,
+		]);
+	}
+
+	public function update(array $request)
+	{
+		$veterinaryCareModel = $this->_container->get(VeterinaryCareModel::class);
+		$oldVeterinaryCare = $veterinaryCareModel->getOne($request['id']);
+
+		if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($request)) {
+			$veterinaryCare = new VeterinaryCare(
+				_id: $request['id'] ?? null,
+				_name: $request['name'] ?? null,
+				_animalId: $request['animal'] ?? null,
+				_veterinarianId: $request['veterinarian'] ?? null,
+				_roomId: $request['room'] ?: null,
+				_startDate: new \DateTime($request['startDate']) ?? null,
+				_endDate: new \DateTime($request['endDate']) ?? null,
+				_price: $request['price'] ? $request['price'] * 100 : null,
+				_isPaid: $request['isPaid'] ?? false,
+				_informations: $request['informations'] ?? null,
+			);
+
+			$r = $veterinaryCareModel->update($veterinaryCare);
+			if($r) {
+				$this->_router->CallRoute('veterinary-care', [
+					'id' => $veterinaryCare->getId()
+				]);
+				return;
+			}
+		}
+
+		$animalModel = $this->_container->get(AnimalModel::class);
+		$animals = $animalModel->getAll();
+
+		$veterinarianModel = $this->_container->get(VeterinarianModel::class);
+		$veterinarians = $veterinarianModel->getAll();
+
+		$roomModel = $this->_container->get(RoomModel::class);
+		$rooms = $roomModel->getAll();
+
+		$this->render('veterinaryCare/updateVeterinaryCare.twig', [
+			'animals' => $animals,
+			'veterinarians' => $veterinarians,
+			'rooms' => $rooms,
+			'oldVeterinaryCare' => $oldVeterinaryCare,
 		]);
 	}
 }

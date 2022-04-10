@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Entity\Room;
 use App\Models\RoomModel;
 use App\Controllers\AbstractController;
+use App\Models\VeterinaryPracticeModel;
 
 class RoomController extends AbstractController
 {
@@ -47,5 +48,35 @@ class RoomController extends AbstractController
 		$this->render('customer/newCustomer.twig', [
 			'veterinaryPractices' => $veterinaryPractices
 		]);
+	}
+
+	public function update(array $request)
+	{
+		$roomModel = $this->_container->get(RoomModel::class);
+		$oldRoom = $roomModel->getOne($request['id']);
+
+		if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($request)) {
+			$room = new Room(
+				_id: $oldRoom->getId(),
+				_name: $request['name'] ?? '',
+				_speciality: $request['speciality'] ?? '',
+				_veterinaryPracticeId: $request['veterinaryPractice'] ?? null
+			);
+
+			$r = $roomModel->update($room);
+			if($r) {
+				$this->_router->CallRoute('room', ['id' => $room->getId()]);
+				return;
+			}
+		}
+
+		$veterinaryPracticeModel = $this->_container->get(VeterinaryPracticeModel::class);
+		$veterinaryPractices = $veterinaryPracticeModel->getAll();
+
+		$this->render('room/updateRoom.twig', [
+			'oldRoom' => $oldRoom,
+			'veterinaryPractices' => $veterinaryPractices
+		]);
+
 	}
 }

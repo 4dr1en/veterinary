@@ -25,6 +25,10 @@
 	{% if customer.informations is not null %}
 		<p class="mb-3 mt-3">{{ customer.informations }}</p>
 	{% endif %}
+
+	<div>
+		<a class="text-warning" href="/customer/update/{{ customer.id }}">Update</a>
+	</div>
 </div>
 
 {% endblock %}

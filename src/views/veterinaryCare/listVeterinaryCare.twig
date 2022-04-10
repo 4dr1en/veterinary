@@ -15,7 +15,6 @@
 					</tr>
 				</thead>
 				<tbody>
-
 					{% for veterinaryCare in veterinaryCares %}
 						<tr>
 							<td>{{ veterinaryCare.name }}</td>
@@ -29,7 +28,7 @@
 							<td>
 								{% if veterinaryCare.veterinarian is not null %}
 									<a href="/veterinarian/{{ veterinaryCare.veterinarian.id }}">
-										{{ veterinaryCare.veterinarian.name }}
+										{{ veterinaryCare.veterinarian }}
 									</a>
 								{% endif %}
 							</td>

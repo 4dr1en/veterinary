@@ -7,7 +7,6 @@ use Ramsey\Uuid\Uuid;
 
 abstract class AbstractController
 {
-	protected $_templatesPath = '/src/views/';
 	protected \DI\Container $_container;
 	private \Twig\Environment $_twig;
 

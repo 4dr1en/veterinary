@@ -1,0 +1,74 @@
+{% extends "body.twig" %}
+
+{% block main %}
+
+<main class="container">
+
+	<h1 class="display-4 mt-4 mb-5">Update care</h1>
+
+	<form action="/veterinary-care/update/{{ oldVeterinaryCare.id }}" method="post" class="mb-5">
+		<div class="form-group col-md-3 mb-2">
+			<label for="name">Name</label>
+			<input type="text" class="form-control" id="name" name="name" value="{{oldVeterinaryCare.name}}">
+		</div>
+	
+		<div class="form-group col-md-3 mb-2">
+			<label for="animal">Animal</label>
+			<select id="animal" name="animal" class="form-control">
+				<option value="">animal</option>
+				{% for animal in animals %}
+					<option value="{{animal.id}}" {% if animal.id == oldVeterinaryCare.animalId %}selected{% endif %}>{{animal.name}}</option>
+				{% endfor %}
+			</select>
+		</div>
+	
+		<div class="form-group col-md-3 mb-2">
+			<label for="veterinarian">Veterinarian</label>
+			<select id="veterinarian" name="veterinarian" class="form-control">
+				<option value="">veterinarian</option>
+				{% for veterinarian in veterinarians %}
+					<option value="{{veterinarian.id}}" {% if veterinarian.id == oldVeterinaryCare.veterinarianId %}selected{% endif %}>{{veterinarian}}</option>
+				{% endfor %}
+			</select>
+		</div>
+
+		<div class="form-group col-md-3 mb-2">
+			<label for="room">Room</label>
+			<select id="room" name="room" class="form-control">
+				<option value="">room</option>
+				{% for room in rooms %}
+					<option value="{{room.id}}" {% if room.id == oldVeterinaryCare.roomId %}selected{% endif %}>{{room.name}}</option>
+				{% endfor %}
+			</select>
+		</div>
+	
+		<div class="form-group col-md-3 mb-2">
+			<label for="start-date">Start date</label>
+			<input type="date" class="form-control" id="start-date" name="startDate" value="{{oldVeterinaryCare.startDate|date('Y-m-d')}}">
+		</div>
+
+		<div class="form-group col-md-3 mb-2">
+			<label for="end-date">End date</label>
+			<input type="date" class="form-control" id="end-date" name="endDate" value="{{oldVeterinaryCare.endDate|date('Y-m-d')}}">
+		</div>
+
+		<div class="form-group col-md-3 mb-2">
+			<label for="price">Price ($)</label>
+			<input type="number" class="form-control" id="price" name="price" value="{{oldVeterinaryCare.price / 100}}" min="0" step="0.01">
+		</div>
+
+		<div class="form-group col-md-3 mb-2">
+			<label for="isPaid">Is Paid</label>
+			<input type="checkbox"id="isPaid" name="isPaid" {% if oldVeterinaryCare.isPaid %}checked{% endif %}>
+		</div>
+
+		<div class="form-group col-md-3 mb-2">
+			<label for="informations">Information</label>
+			<textarea class="form-control" id="informations" name="informations" rows="3">{{oldVeterinaryCare.informations}}</textarea>
+		</div>
+
+		<button type="submit" class="btn btn-primary">Update</button>
+	</form>
+</main>
+
+{% endblock %}

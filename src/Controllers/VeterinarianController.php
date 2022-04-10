@@ -72,4 +72,61 @@ class VeterinarianController extends AbstractController
 			'veterinarians' => $veterinarians,
 		]);
 	}
+
+	public function update($request)
+	{
+		$veterinarianModel = $this->_container->get(VeterinarianModel::class);
+		$oldveterinarian = $veterinarianModel->getOne($request['id']);
+
+		if($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($request)){
+			
+			if(($_FILES['image']) && $_FILES['image']['error'] == 0) {
+				if($oldveterinarian->getImagePath()) {
+					$this->removeImage( $oldveterinarian->getImagePath() );
+				}
+				$imgPath = $this->saveImage($_FILES['image'], 'veterinarians/');
+			}
+
+			$veterinarian = new Veterinarian(
+				_id: $oldveterinarian->getId(),
+				_firstname: $request['firstname'] ?? '',
+				_lastname: $request['lastname'] ?? '',
+				_address: $request['address'] ?? '',
+				_phoneNumber: $request['phoneNumber'] ?? '',
+				_email: $request['email'] ?? '',
+				_informations: $request['informations'] ?? '',
+				_gender: $request['gender'] ?? null,
+				_imagePath: $imgPath ?? null,
+				_speciality: $request['speciality'] ?? null,
+				_veterinaryPracticeId: $request['veterinaryPractice'] ?: null,
+				_upperHierarchyId: $request['upperHierarchy'] ?: null,
+				_entryDate: new \DateTime($request['entryDate']) ?? null,
+				_exitDate: new \DateTime($request['exitDate']) ?? null,
+				_carePerDay: (int) $request['carePerDay'] ?? null
+			);
+
+			$r = $veterinarianModel->update($veterinarian);
+			if($r) {
+				$this->_router->CallRoute('veterinarian', [
+					'id' => $veterinarian->getId()
+				]);
+				return;
+			}
+		}
+
+		$veterinaryPracticeModel = $this->_container->get(VeterinaryPracticeModel::class);
+		$veterinaryPractices = $veterinaryPracticeModel->getAll();
+
+		$veterinarians = $veterinarianModel->getAllActive();
+
+		$veterinarians = array_filter($veterinarians, function($veterinarian) use ($oldveterinarian) {
+			return $veterinarian->getId() !== $oldveterinarian->getId();
+		});
+
+		$this->render('veterinarian/updateVeterinarian.twig', [
+			'veterinaryPractices' => $veterinaryPractices,
+			'veterinarians' => $veterinarians,
+			'oldveterinarian' => $oldveterinarian
+		]);
+	}
 }

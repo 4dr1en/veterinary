@@ -23,6 +23,8 @@ class Veterinarian extends AbstractEntity
 		private ?\DateTime $_entryDate = null,
 		private ?\DateTime $_exitDate = null,
 		private ?int $_carePerDay = null,
+		private ?Veterinarian $_upperHierarchy = null,
+		private ?VeterinaryPractice $_veterinaryPractice = null,
 	) {
 	}
 
@@ -215,5 +217,49 @@ class Veterinarian extends AbstractEntity
 			$return .= ' | ' . $this->_speciality;
 		}
 		return $return;
+	}
+
+	/**
+	 * Get the value of _upperHierarchy
+	 * 
+	 * @return  Veterinarian|null
+	 */ 
+	public function getUpperHierarchy(): ?Veterinarian
+	{
+		return $this->_upperHierarchy;
+	}
+
+	/**
+	 * Set the value of _upperHierarchy
+	 *
+	 * @return  self
+	 */ 
+	public function setUpperHierarchy($_upperHierarchy): self
+	{
+		$this->_upperHierarchy = $_upperHierarchy;
+
+		return $this;
+	}
+
+	/**
+	 * Get the value of _veterinaryPractice
+	 * 
+	 * @return  veterinaryPractice|null
+	 */
+	public function getVeterinaryPractice(): ?veterinaryPractice
+	{
+		return $this->_veterinaryPractice;
+	}
+
+	/**
+	 * Set the value of _veterinaryPractice
+	 *
+	 * @return  self
+	 */
+	public function setVeterinaryPractice($_veterinaryPractice): self
+	{
+		$this->_veterinaryPractice = $_veterinaryPractice;
+
+		return $this;
 	}
 }

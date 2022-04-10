@@ -47,4 +47,37 @@ class CustomerController extends AbstractController
 			'veterinaryPractices' => $veterinaryPractices
 		]);
 	}
+
+	public function update(array $request)
+	{
+		$customerModel = $this->_container->get(CustomerModel::class);
+		$oldCustomer = $customerModel->getOne($request['id']);
+
+		if (isset($request['firstname'])){
+			$customer = new Customer();
+			$customer->setId($request['id']);
+			$customer->setFirstname($request['firstname'] ?? '');
+			$customer->setLastname($request['lastname'] ?? '');
+			$customer->setAddress($request['address'] ?? '');
+			$customer->setPhoneNumber($request['phoneNumber'] ?? '');
+			$customer->setEmail($request['email'] ?? '');
+			$customer->setInformations($request['informations'] ?? '');
+			$customer->setRegistrationDate(new \DateTime($request['registrationDate']) ?? null);
+			$customer->setVeterinaryPracticeId($request['veterinaryPractice'] ?? null);
+
+			$r = $customerModel->update($customer);
+			if($r) {
+				$this->_router->CallRoute('customer', ['id' => $customer->getId()]);
+				return;
+			}
+		}
+
+		$veterinaryPracticeModel = $this->_container->get(VeterinaryPracticeModel::class);
+		$veterinaryPractices = $veterinaryPracticeModel->getAll();
+
+		$this->render('customer/updateCustomer.twig', [
+			'oldCustomer' => $oldCustomer,
+			'veterinaryPractices' => $veterinaryPractices
+		]);
+	}
 }

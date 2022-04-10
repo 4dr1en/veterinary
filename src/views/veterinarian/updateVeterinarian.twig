@@ -1,0 +1,81 @@
+{% extends "body.twig" %}
+
+{% block main %}
+
+<div class="container">
+	<h1>Update {{ oldveterinarian.firstname }} {{ oldveterinarian.lastname }}</h1>
+
+	<form action="/veterinarian/update/{{ oldveterinarian.id }}" method="POST" enctype="multipart/form-data" class="mb-5">
+		<div class="form-group col-md-3 mb-2">
+			<label for="firstname">Firstname</label>
+			<input type="text" class="form-control" id="firstname" name="firstname" value="{{ oldveterinarian.firstname }}">
+		</div>
+		<div class="form-group col-md-3 mb-2">
+			<label for="lastname">Lastname</label>
+			<input type="text" class="form-control" id="lastname" name="lastname" value="{{ oldveterinarian.lastname }}">
+		</div>
+		<div class="form-group col-md-3 mb-2">
+			<label for="email">Email</label>
+			<input type="text" class="form-control" id="email" name="email" value="{{ oldveterinarian.email }}">
+		</div>
+		<div class="form-group col-md-3 mb-2">
+			<label for="phone-number">Phone number</label>
+			<input type="text" class="form-control" id="phone-number" name="phoneNumber" value="{{ oldveterinarian.phonenumber }}">
+		</div>
+		<div class="form-group col-md-3">
+			<label for="gender">Gender</label>
+			<select name="gender" class="form-select" aria-label="Gender">
+				<option value="">Gender</option>
+				<option value="0"  {{ oldveterinarian.gender is same as(false) ? 'selected' : '' }}>Female</option>
+				<option value="1" {{ oldveterinarian.gender is same as(true) ? 'selected' : '' }}>Male</option>
+			</select>
+		</div>
+		<div class="form-group col-md-3">
+			<label for="speciality">Speciality</label>
+			<input type="text" class="form-control" id="speciality" name="speciality" placeholder="speciality" value="{{ oldveterinarian.speciality }}">
+		</div>
+		<div class="form-group col-md-3">
+			<label for="veterinary-practice">Veterinary practice</label>
+			<select id="veterinary-practice" name="veterinaryPractice" class="form-select" aria-label="Veterinary practice">
+				<option value="">Veterinary practice</option>
+				{% for veterinaryPractice in veterinaryPractices %}
+					<option value="{{veterinaryPractice.id}}" {{ oldveterinarian.veterinaryPracticeId is same as(veterinaryPractice.id) ? 'selected' : '' }}>{{veterinaryPractice.name}}</option>
+				{% endfor %}
+			</select>
+		</div>
+		<div class="form-group col-md-3">
+			<label for="upper-hierarchy">Supervisor</label>
+			<select id="upper-hierarchy" name="upperHierarchy" class="form-select" aria-label="Supervisor">
+				<option value="">Supervisor</option>
+				{% for veterinarian in veterinarians %}
+					<option value="{{veterinarian.id}}" {{ oldveterinarian.upperHierarchyId is same as(veterinarian.id) ? 'selected' : '' }}>{{veterinarian.firstname}} {{veterinarian.lastname}}</option>
+				{% endfor %}
+			</select>
+		</div>
+		<div class="form-group col-md-3">
+			<label for="care-per-day">Care per day</label>
+			<input type="text" class="form-control" id="care-per-day" name="carePerDay" placeholder="care per day" value="{{ oldveterinarian.carePerDay }}">
+		</div>
+		<div class="form-group col-md-3">
+			<label for="entry-date">Entry date</label>
+			<input type="date" class="form-control" id="entry-date" name="entryDate" value="{{ oldveterinarian.entryDate|date("Y-m-d")  }}">
+		</div>
+		<div class="form-group col-md-3">
+			<label for="exit-date">Exit date</label>
+			<input type="date" class="form-control" id="exit-date" name="exitDate" value="{{ oldveterinarian.exitDate|date("Y-m-d")  }}">
+		</div>
+		<div class="form-group col-md-3">
+			<label for="image">Image</label>
+			<input type="file" class="form-control-file" id="image" name="image" accept=".jpg, .png, .webp"/>
+		</div>
+		<div class="form-group col-md-3">
+			<label for="informations">Informations</label>
+			<textarea class="form-control" id="informations" name="informations" rows="3">{{ oldveterinarian.informations }}</textarea>
+		</div>
+
+		<button type="submit" class="btn btn-primary mt-2">Submit</button>
+
+	</form>
+</div>
+
+{% endblock %}

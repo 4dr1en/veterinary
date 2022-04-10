@@ -98,7 +98,42 @@ class VeterinaryCareModel extends AbstractModel
 		$query->bindValue(':name', $veterinaryCare->getName(), PDO::PARAM_STR);
 		$query->bindValue(':animal_id', $veterinaryCare->getAnimalId(), PDO::PARAM_STR);
 		$query->bindValue(':veterinarian_id', $veterinaryCare->getVeterinarianId(), PDO::PARAM_STR);
-		$query->bindValue(':room_id', $veterinaryCare->getRoomId(), PDO::PARAM_STR);
+		$query->bindValue(':room_id', $veterinaryCare->getRoomId(), PDO::PARAM_INT);
+		$query->bindValue(':start_date', $veterinaryCare->getStartDate()?->format( 'Y-m-d H:i:s')?: null);
+		$query->bindValue(':end_date', $veterinaryCare->getEndDate()?->format( 'Y-m-d H:i:s')?: null);
+		$query->bindValue(':price', $veterinaryCare->getPrice(), PDO::PARAM_STR);
+		$query->bindValue(':is_paid', $veterinaryCare->getIsPaid(), PDO::PARAM_BOOL);
+		$query->bindValue(':informations', $veterinaryCare->getInformations(), PDO::PARAM_STR);
+
+		return $query->execute();
+	}
+
+	/**
+	 * Update a veterinary care in the database
+	 *
+	 * @param VeterinaryCare $veterinaryCare
+	 * @return bool
+	 */
+	public function update(VeterinaryCare $veterinaryCare): bool
+	{
+		$query = $this->_pdo->prepare('
+			UPDATE Veterinary_care SET
+				name = :name,
+				animal_id = :animal_id,
+				veterinarian_id = :veterinarian_id,
+				room_id = :room_id,
+				start_date = :start_date,
+				end_date = :end_date,
+				price = :price,
+				is_paid = :is_paid,
+				informations = :informations
+			WHERE id = :id
+		');
+		$query->bindValue(':id', $veterinaryCare->getId(), PDO::PARAM_STR);
+		$query->bindValue(':name', $veterinaryCare->getName(), PDO::PARAM_STR);
+		$query->bindValue(':animal_id', $veterinaryCare->getAnimalId(), PDO::PARAM_STR);
+		$query->bindValue(':veterinarian_id', $veterinaryCare->getVeterinarianId(), PDO::PARAM_STR);
+		$query->bindValue(':room_id', $veterinaryCare->getRoomId(), PDO::PARAM_INT);
 		$query->bindValue(':start_date', $veterinaryCare->getStartDate()?->format( 'Y-m-d H:i:s')?: null);
 		$query->bindValue(':end_date', $veterinaryCare->getEndDate()?->format( 'Y-m-d H:i:s')?: null);
 		$query->bindValue(':price', $veterinaryCare->getPrice(), PDO::PARAM_STR);

@@ -35,15 +35,26 @@
 				<p class="mb-3"><b>Care per day :</b> {{ veterinarian.carePerDay }}</p>
 			{% endif %}
 			{% if veterinarian.entryDate is not null %}
-				<p class="card-text mb-3"><b>Entry date :</b> {{ veterinarian.entryDate |date("d/m/Y") }}</p>
+				<p class="mb-3"><b>Entry date :</b> {{ veterinarian.entryDate |date("d/m/Y") }}</p>
 			{% endif %}
 			{% if veterinarian.exitDate is not null %}
-				<p class="card-text mb-3"><b>Exit date :</b> {{ veterinarian.exitDate |date("d/m/Y") }}</p>
+				<p class="mb-3"><b>Exit date :</b> {{ veterinarian.exitDate |date("d/m/Y") }}</p>
+			{% endif %}
+
+			{% if veterinarian.VeterinaryPractice is not null %}
+				<p class="mb-3"><b>VeterinaryPractice:</b> <a href="/veterinary-practice/{{ veterinarian.veterinaryPractice.id }}">{{ veterinarian.veterinaryPractice.name }}</a></p>
+			{% endif %}
+
+			{% if veterinarian.upperHierarchy is not null %}
+				<p class="mb-3"><b>UpperHierarchy :</b> <a href="/veterinarian/{{veterinarian.upperHierarchy.id}}">{{ veterinarian.upperHierarchy }}</a></p>
 			{% endif %}
 
 			{% if veterinarian.informations is not null %}
 				<p class="mb-3 mt-3">{{ veterinarian.informations }}</p>
 			{% endif %}
+		</div>
+		<div class="col-12">
+			<a href="/veterinarian/update/{{ veterinarian.id }}" class="text-warning">Update</a>
 		</div>
 	</div>
 </div>

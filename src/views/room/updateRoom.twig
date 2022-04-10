@@ -1,0 +1,33 @@
+{% extends "body.twig" %}
+
+{% block main %}
+	<main>
+		<div class="container">
+			<h1 class="display-4 mt-4 mb-3">Update {{ oldRoom.name }}l</h1>
+
+			<form action="/room/update/{{ oldRoom.id }}" method="post">
+				<div class="form-group col-md-3">
+					<label for="name">Name</label>
+					<input type="text" class="form-control" id="name" name="name" value="{{ oldRoom.name }}">
+				</div>
+
+				<div class="form-group col-md-3">
+					<label for="speciality">Speciality</label>
+					<input type="text" class="form-control" id="speciality" name="speciality" value="{{ oldRoom.speciality }}">
+				</div>
+
+				<div class="form-group col-md-3 mb-2">
+					<label for="veterinary-practice">Veterinary practice</label>
+					<select id="veterinary-practice" name="veterinaryPractice" class="form-select" aria-label="Veterinary practice">
+						<option value="">select the veterinary practice</option>
+						{% for veterinaryPractice in veterinaryPractices %}
+							<option value="{{ veterinaryPractice.id }}" {% if oldRoom.veterinaryPractice.id == veterinaryPractice.id %}selected{% endif %}>{{ veterinaryPractice.name }}</option>
+						{% endfor %}
+					</select>
+				</div>
+
+				<button type="submit" class="btn btn-primary mt-2">Submit</button>
+			</form>
+		</div>
+	</main>
+{% endblock %}
