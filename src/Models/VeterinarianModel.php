@@ -44,8 +44,8 @@ class VeterinarianModel extends AbstractModel
 			'SELECT Veterinarian.*, sum(Veterinary_care.price) as turnover
 			FROM Veterinarian
 			LEFT JOIN Veterinary_care ON Veterinarian.id = Veterinary_care.veterinarian_id
-			WHERE exit_date IS NULL;
-			GROUP BY Veterinarian.id
+			WHERE exit_date IS NULL
+			GROUP BY Veterinarian.id;
 		');
 		$query->execute();
 		$veterinariansData = $query->fetchAll();

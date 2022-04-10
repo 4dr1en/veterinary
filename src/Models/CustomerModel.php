@@ -172,7 +172,7 @@ class CustomerModel extends AbstractModel
 			$data['informations'],
 			$data['registration_date'] ? new \DateTime($data['registration_date']) : null,
 			$data['veterinary_practice_id'],
-			$data['turnover']
+			empty($data['turnover']) ? null : $data['turnover']
 		);
 
 		return $customer;

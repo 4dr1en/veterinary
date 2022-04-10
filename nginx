@@ -1,0 +1,24 @@
+server {
+    listen 80;
+    listen 443 ssl;
+    server_name cours-object.local;
+    root /var/www/html/cours-object;
+
+    index index.php;
+
+    location / {
+        try_files /public/$uri /public/$uri/ /public/index.php$is_args$args;
+    }
+    
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+     }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+    ssl_certificate /etc/ssl/certs/localhost.crt;
+    ssl_certificate_key /etc/ssl/private/localhost.key;
+}

@@ -5,8 +5,8 @@ use App\Entity\Animal;
 use App\Models\AnimalModel;
 use App\Models\CustomerModel;
 use App\Models\VeterinarianModel;
-use App\Controllers\SaveImageTrait;
 use App\Models\VeterinaryCareModel;
+use App\Controllers\SaveImageTrait;
 use App\Controllers\AbstractController;
 
 class AnimalController extends AbstractController

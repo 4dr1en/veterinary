@@ -127,7 +127,7 @@ class AnimalModel extends AbstractModel
 			_informations: $data['informations'],
 			_favoriteVeterinarian: $favoriteVeterinarian,
 			_owner: $owner,
-			_turnover: $data['turnover']
+			_turnover: empty($data['turnover']) ? null : $data['turnover']
 		);
 
 		return $animal;
