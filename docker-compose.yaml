@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+    db:
+        container_name: db
+        image: mariadb
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+            MARIADB_MYSQL_LOCALHOST_USER: 127.0.0.10
+        restart: always
+        volumes:
+            - ./veterinary.sql:/docker-entrypoint-initdb.d/veterinary.sql
+            - db-data:/var/lib/mysql
+        networks:
+            - backend
+    
+    www:
+        container_name: www
+        build: .
+        ports:
+            - "81:80"
+        environment:
+            MYSQL_HOST: "db"
+        depends_on:
+            - db
+        restart: always
+        networks:
+            - backend
+
+networks:
+    backend:
+
+volumes:
+    db-data:
