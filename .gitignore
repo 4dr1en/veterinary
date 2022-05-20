@@ -3,4 +3,4 @@ cache/
 cache/twig/*
 !cache/twig/readme.md
 vendor/
-.env
+.config

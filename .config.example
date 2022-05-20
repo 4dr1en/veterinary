@@ -3,7 +3,7 @@ App:
         Name: veterinary
         Username: root
         Password:
-        Host: localhost
+        Host: db
         Port: 3306
 
     Twig:

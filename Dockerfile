@@ -19,8 +19,9 @@ WORKDIR /var/www/html
 
 COPY . .
 
-RUN chown www-data:www-data -R /var/www/html/cache  && \
-    chown www-data:www-data -R /var/www/html/public/uploads  && \
+RUN mkdir cache && \
+    chown www-data:www-data -R /var/www/html/cache && \
+    chown www-data:www-data -R /var/www/html/public/uploads && \
     chmod 775 -R /var/www/html/cache && \
     chmod 775 -R /var/www/html/public/uploads
 

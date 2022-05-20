@@ -11,7 +11,7 @@ class Parameters
 	 */
 	public static function load(): void
 	{
-		SELF::$_parameters = yaml_parse_file('../.env');
+		SELF::$_parameters = yaml_parse_file('../.config');
 	}
 
 	/**
